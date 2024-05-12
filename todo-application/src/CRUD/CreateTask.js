@@ -35,7 +35,7 @@ function CreateTask() {
   return (
     <div>
         <TextField id="standard-basic" label="Add a new task" variant="standard"  value={taskName} onChange={handleInputChange} />
-        <Button onClick={handleAddTask} variant="contained" endIcon={<TaskIcon />}> Done </Button>     
+        <Button onClick={handleAddTask} variant="contained" endIcon={<TaskIcon />}> Add </Button>     
     </div>
   );
 }

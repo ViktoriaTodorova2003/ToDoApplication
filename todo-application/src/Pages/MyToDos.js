@@ -18,11 +18,7 @@ function MyToDos() {
     <div>
       <h1>My ToDos</h1>
       <ReadTasks />
-      {!showCreateTask && (
-        <Button variant="outlined" startIcon={<PostAddIcon />} onClick={toggleCreateTask}>
-          Add Task
-        </Button>
-      )}
+     
       {showCreateTask && <CreateTask />}
     </div>
   );
