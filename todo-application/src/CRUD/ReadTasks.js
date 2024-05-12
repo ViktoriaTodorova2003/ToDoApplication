@@ -17,11 +17,14 @@ function ReadTasks() {
     };
 
     const handleEditTask = (taskId) => {
-       //TESTTTTrtrtjtkyuluikhgjfjyyrt
+       
     };
 
     const handleDeleteTask = (taskId) => {
-           
+        const updatedTasks = todoTasks.filter(task => task.id !== taskId);
+        GlobalState.set({
+            todoTasks: [...updatedTasks]
+        });        
     };
 
     return (
