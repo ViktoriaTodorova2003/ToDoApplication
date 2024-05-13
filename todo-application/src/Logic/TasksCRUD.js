@@ -8,6 +8,8 @@ import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined
 import CheckOutlinedIcon from '@mui/icons-material/CheckOutlined';
 import TaskIcon from '@mui/icons-material/Task';
 
+const _ = require('lodash');
+
 function TasksCRUD() {
     const { todoTasks } = useGlobalState() || {};
     const [taskName, setTaskName] = useState('');
