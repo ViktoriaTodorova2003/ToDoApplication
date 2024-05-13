@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useGlobalState, GlobalState } from '../App'; 
 import { v4 as uuidv4 } from 'uuid';
 
-import { List, ListItem, Checkbox, ListItemText, ListItemSecondaryAction, IconButton, TextField, Button, Snackbar } from '@mui/material'; 
+import { List, ListItem, Checkbox, ListItemText, ListItemSecondaryAction, IconButton, TextField, Button,Snackbar, Dialog, DialogActions, DialogTitle } from '@mui/material'; 
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import CheckOutlinedIcon from '@mui/icons-material/CheckOutlined';
@@ -15,7 +15,7 @@ function TasksCRUD() {
     const [editedTaskName, setEditedTaskName] = useState('');
     const [isEditing, setIsEditing] = useState(false);
     const [openSnackbar, setOpenSnackbar] = useState(false);
-    const [openConfirmation, setOpenConfirmation] = useState(false); 
+    const [openConfirmation, setOpenConfirmation] = useState(false);
     const [taskToDeleteId, setTaskToDeleteId] = useState(null);
 
     const handleSnackbarClose = () => {
@@ -82,10 +82,20 @@ function TasksCRUD() {
 
 
     const handleDeleteTask = (taskId) => {
-        const updatedTasks = todoTasks.filter(task => task.id !== taskId);
+        setTaskToDeleteId(taskId); // Set the id of the task to be deleted
+        setOpenConfirmation(true); // Open the confirmation dialog
+    };
+
+    const confirmDeleteTask = () => {
+        const updatedTasks = todoTasks.filter(task => task.id !== taskToDeleteId); // Filter out the task to be deleted
         GlobalState.set({
             todoTasks: [...updatedTasks]
-        });        
+        });
+        setOpenConfirmation(false); // Close the confirmation dialog
+    };
+
+    const handleCancelDelete = () => {
+        setOpenConfirmation(false); // Close the confirmation dialog
     };
 
     return (
@@ -129,6 +139,24 @@ function TasksCRUD() {
             </List>
             <TextField id="standard-basic" label="Add a new task" variant="standard"  value={taskName} onChange={handleInputChange} />
             <Button onClick={handleAddTask} variant="contained" endIcon={<TaskIcon />}> Add </Button>
+            
+            <Dialog
+                open={openConfirmation}
+                onClose={handleCancelDelete}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+            >
+                <DialogTitle id="alert-dialog-title">{"Are you sure you want to remove this task?"}</DialogTitle>
+                <DialogActions>
+                    <Button onClick={handleCancelDelete} color="primary">
+                        Cancel
+                    </Button>
+                    <Button onClick={confirmDeleteTask} color="primary" autoFocus>
+                        Delete
+                    </Button>
+                </DialogActions>
+            </Dialog>
+
             <Snackbar
             anchorOrigin={{
                 vertical: 'bottom',
