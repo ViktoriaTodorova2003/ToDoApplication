@@ -1,5 +1,4 @@
 import React from 'react';
-import ReadTasks from './CRUD/ReadTasks.js';
 
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from './Pages/Home.js';
@@ -7,14 +6,9 @@ import MyToDos from './Pages/MyToDos.js';
 import HelloWorld from './Pages/HelloWorld.js';
 import Picture from './Pages/Picture.js';
 
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import SideBar from './SideBar.js';
 import { Grid } from '@mui/material';
-
-//const AppWrapper = styled('div')({
-//  display: 'flex',
-//  minHeight: '100vh',
-//  backgroundColor: '#e8e8e8', 
-//});
 
 
 const initialGlobalState = {
@@ -88,19 +82,24 @@ export default function App() {
   //return <Global Root={() => <SomeComponent />} />;
   return (
     <Global Root={() => <Router>
+
       <Grid container>
-        <Grid item xs={2.5}>
+        <Grid item xs={4} style={{ flex: '0 0 auto' }}>
           <SideBar />
-        </Grid>  
-        <Grid item xs={9}>
+        </Grid>
+        
+        <Grid item xs={6} style={{ flex: '1 1 auto' }}>
+
           <Routes>
             <Route path="/home" element={<Home />} />
             <Route path="/mytodos" element={<MyToDos />} />
             <Route path="/helloworld" element={<HelloWorld />} />
             <Route path="/picture" element={<Picture />} />
           </Routes>
+
         </Grid>
       </Grid>  
+
     </Router>
     }
     />

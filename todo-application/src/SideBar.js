@@ -32,8 +32,14 @@ export default function SideBar() {
                 width: drawerWidth,
                 flexShrink: 0,
                 '& .MuiDrawer-paper': {
-                width: drawerWidth,
-                boxSizing: 'border-box',
+                    boxSizing: 'border-box',
+                    width: drawerWidth,
+                    '@media (max-width: 600px)': {
+                        width: '70vw',
+                    },
+                    '@media (max-width: 960px)': {
+                        width: '30vw',
+                    },
                 },
             }}
             variant='permanent'
