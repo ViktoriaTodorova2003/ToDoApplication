@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useGlobalState, GlobalState } from '../App'; 
 import { v4 as uuidv4 } from 'uuid';
 
-import { List, ListItem, Checkbox, ListItemText, ListItemSecondaryAction, IconButton, TextField, Button } from '@mui/material'; 
+import { List, ListItem, Checkbox, ListItemText, ListItemSecondaryAction, IconButton, TextField, Button, Snackbar } from '@mui/material'; 
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import CheckOutlinedIcon from '@mui/icons-material/CheckOutlined';
@@ -14,6 +14,13 @@ function TasksCRUD() {
     const [editingTaskId, setEditingTaskId] = useState(null);
     const [editedTaskName, setEditedTaskName] = useState('');
     const [isEditing, setIsEditing] = useState(false);
+    const [openSnackbar, setOpenSnackbar] = useState(false);
+    const [openConfirmation, setOpenConfirmation] = useState(false); 
+    const [taskToDeleteId, setTaskToDeleteId] = useState(null);
+
+    const handleSnackbarClose = () => {
+        setOpenSnackbar(false);
+    };
 
     const toggleTaskStatus = (taskId) => {
         const taskToUpdate = todoTasks.find(task => task.id === taskId);
@@ -29,18 +36,23 @@ function TasksCRUD() {
     };
 
     const handleAddTask = () => {
-        const newTask = {
-        id: uuidv4(), 
-        name: taskName.trim(), 
-        status: 'pending',
-        };
+        if (taskName.trim() === '') {
+            setOpenSnackbar(true);
+            return;
+        }
 
+        if (!Array.isArray(todoTasks)) {
+            GlobalState.set({
+                todoTasks: [{ id: uuidv4(), name: taskName.trim(), status: 'pending' }]
+            });
+        } else {
 
-    GlobalState.set({
-        todoTasks: [...todoTasks, newTask],
-    });
-
-    setTaskName('');
+            GlobalState.set({
+                todoTasks: [...todoTasks, { id: uuidv4(), name: taskName.trim(), status: 'pending' }]
+            });
+        }
+    
+        setTaskName('');
 
   };
 
@@ -76,7 +88,6 @@ function TasksCRUD() {
         });        
     };
 
-    // ADDING TEST IDS
     return (
         <div>
             <List sx={{ width: '100%', maxWidth: 400, bgcolor: 'background.paper' }}>
@@ -109,7 +120,7 @@ function TasksCRUD() {
                                         <EditOutlinedIcon />
                                     </IconButton>
                                 )}
-                                <IconButton onClick={() => handleDeleteTask(task.id)}>
+                                <IconButton onClick={() => handleDeleteTask(task.id)}  >
                                     <DeleteOutlineOutlinedIcon />
                                 </IconButton>
                             </ListItemSecondaryAction>
@@ -118,6 +129,16 @@ function TasksCRUD() {
             </List>
             <TextField id="standard-basic" label="Add a new task" variant="standard"  value={taskName} onChange={handleInputChange} />
             <Button onClick={handleAddTask} variant="contained" endIcon={<TaskIcon />}> Add </Button>
+            <Snackbar
+            anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'center',
+            }}
+            open={openSnackbar}
+            autoHideDuration={3000}
+            onClose={handleSnackbarClose}
+            message="Please enter a task name"
+        />
         </div>
     );
   }
