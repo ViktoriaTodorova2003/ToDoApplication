@@ -18,17 +18,22 @@ function TasksCRUD() {
     const [openConfirmation, setOpenConfirmation] = useState(false);
     const [taskToDeleteId, setTaskToDeleteId] = useState(null);
 
+    const _ = require('lodash');
+
     const handleSnackbarClose = () => {
         setOpenSnackbar(false);
     };
 
     const toggleTaskStatus = (taskId) => {
-        const taskToUpdate = todoTasks.find(task => task.id === taskId);
-        if (!taskToUpdate) return;
-        taskToUpdate.status = taskToUpdate.status === 'done' ? 'pending' : 'done';
+        const taskIndex = _.findIndex(todoTasks, { id: taskId });
+        if (taskIndex === -1) return;
+    
+        const updatedTasks = _.cloneDeep(todoTasks);
+        updatedTasks[taskIndex].status = updatedTasks[taskIndex].status === 'done' ? 'pending' : 'done';
+    
         GlobalState.set({
-            todoTasks: [...todoTasks]
-        });        
+            todoTasks: updatedTasks
+        });
     };
 
     const handleInputChange = (event) => {
@@ -40,21 +45,15 @@ function TasksCRUD() {
             setOpenSnackbar(true);
             return;
         }
-
-        if (!Array.isArray(todoTasks)) {
-            GlobalState.set({
-                todoTasks: [{ id: uuidv4(), name: taskName.trim(), status: 'pending' }]
-            });
-        } else {
-
-            GlobalState.set({
-                todoTasks: [...todoTasks, { id: uuidv4(), name: taskName.trim(), status: 'pending' }]
-            });
-        }
+    
+        const newTask = { id: uuidv4(), name: taskName.trim(), status: 'pending' };
+    
+        GlobalState.set({
+            todoTasks: _.isArray(todoTasks) ? [...todoTasks, newTask] : [newTask]
+        });
     
         setTaskName('');
-
-  };
+    };
 
     const handleEditTask = (taskId, taskName) => {
         setEditingTaskId(taskId);
@@ -63,7 +62,7 @@ function TasksCRUD() {
     };
 
     const handleSaveTask = (taskId) => {
-        const updatedTasks = todoTasks.map(task => {
+        const updatedTasks = _.map(todoTasks, task => {
             if (task.id === taskId) {
                 return {
                     ...task,
@@ -72,7 +71,7 @@ function TasksCRUD() {
             }
             return task;
         });
-
+    
         GlobalState.set({
             todoTasks: updatedTasks,
         });
@@ -82,20 +81,20 @@ function TasksCRUD() {
 
 
     const handleDeleteTask = (taskId) => {
-        setTaskToDeleteId(taskId); // Set the id of the task to be deleted
-        setOpenConfirmation(true); // Open the confirmation dialog
+        setTaskToDeleteId(taskId); 
+        setOpenConfirmation(true); 
     };
 
     const confirmDeleteTask = () => {
-        const updatedTasks = todoTasks.filter(task => task.id !== taskToDeleteId); // Filter out the task to be deleted
+        const updatedTasks = _.filter(todoTasks, task => task.id !== taskToDeleteId);
         GlobalState.set({
-            todoTasks: [...updatedTasks]
+            todoTasks: updatedTasks
         });
-        setOpenConfirmation(false); // Close the confirmation dialog
+        setOpenConfirmation(false);
     };
 
     const handleCancelDelete = () => {
-        setOpenConfirmation(false); // Close the confirmation dialog
+        setOpenConfirmation(false); 
     };
 
     return (
