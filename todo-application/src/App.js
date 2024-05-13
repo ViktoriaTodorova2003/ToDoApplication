@@ -7,7 +7,7 @@ import HelloWorld from './Pages/HelloWorld.js';
 import Picture from './Pages/Picture.js';
 
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import SideBar from './SideBar.js';
+import SideBar from './Components/SideBar.js';
 import { Grid } from '@mui/material';
 
 
@@ -91,7 +91,7 @@ export default function App() {
         <Grid item xs={6} style={{ flex: '1 1 auto' }}>
 
           <Routes>
-            <Route path="/home" element={<Home />} />
+            <Route path="/" element={<Home />} />
             <Route path="/mytodos" element={<MyToDos />} />
             <Route path="/helloworld" element={<HelloWorld />} />
             <Route path="/picture" element={<Picture />} />

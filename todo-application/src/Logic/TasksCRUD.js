@@ -8,7 +8,7 @@ import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined
 import CheckOutlinedIcon from '@mui/icons-material/CheckOutlined';
 import TaskIcon from '@mui/icons-material/Task';
 
-function ReadTasks() {
+function TasksCRUD() {
     const { todoTasks } = useGlobalState() || {};
     const [taskName, setTaskName] = useState('');
     const [editingTaskId, setEditingTaskId] = useState(null);
@@ -76,6 +76,7 @@ function ReadTasks() {
         });        
     };
 
+    // ADDING TEST IDS
     return (
         <div>
             <List sx={{ width: '100%', maxWidth: 400, bgcolor: 'background.paper' }}>
@@ -121,4 +122,4 @@ function ReadTasks() {
     );
   }
 
-export default ReadTasks;
+export default TasksCRUD;
