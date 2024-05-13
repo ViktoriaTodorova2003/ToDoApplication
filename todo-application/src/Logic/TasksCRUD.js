@@ -146,7 +146,7 @@ function TasksCRUD() {
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
             >
-                <DialogTitle id="alert-dialog-title">{"Are you sure you want to remove this task?"}</DialogTitle>
+                <DialogTitle id="alert-dialog-title">{"Are you sure you want to delete this task?"}</DialogTitle>
                 <DialogActions>
                     <Button onClick={handleCancelDelete} color="primary">
                         Cancel
@@ -158,14 +158,14 @@ function TasksCRUD() {
             </Dialog>
 
             <Snackbar
-            anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'center',
-            }}
-            open={openSnackbar}
-            autoHideDuration={3000}
-            onClose={handleSnackbarClose}
-            message="Please enter a task name"
+                anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'center',
+                }}
+                open={openSnackbar}
+                autoHideDuration={3000}
+                onClose={handleSnackbarClose}
+                message="Please enter a task name"
         />
         </div>
     );

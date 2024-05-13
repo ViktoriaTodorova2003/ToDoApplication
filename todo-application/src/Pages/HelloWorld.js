@@ -24,7 +24,7 @@ function HelloWorld() {
     <Box sx={{ paddingTop: '10px', paddingLeft: { xs: '20px', sm: '65px' } }}>
       <Typography variant="h4" style={{ marginTop: '20px' }}>Hello World!</Typography>
       <Box sx={{ overflow: 'hidden' }}>
-        <Typography variant="subtitle2">*This is just a filler page, it is not going to actually load</Typography>
+        <Typography variant="subtitle2">*This is just a filler page, it is not going to load</Typography>
         <Media loading={true} /> 
         <Media loading={true} /> 
     </Box>

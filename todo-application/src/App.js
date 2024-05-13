@@ -62,24 +62,7 @@ class Global extends React.Component {
 // Create a shorthand Hook for using the GlobalState
 const useGlobalState = () => React.useContext(GlobalState);
 
-// Create an example component which both renders and modifies the GlobalState
-function SomeComponent() {
-  const { count } = useGlobalState();
-
-  // Create a function which mutates GlobalState
-  function incrementCount() {
-    GlobalState.set({
-      count: count + 1,
-    });
-  }
-
-  return <div onClick={incrementCount}>{count}</div>;
-  
-}
-
 export default function App() {
-  // Note: within the Root function we can return any Component (not just SomeComponent, but also a Router for instance)
-  //return <Global Root={() => <SomeComponent />} />;
   return (
     <Global Root={() => <Router>
 
