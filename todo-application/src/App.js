@@ -6,13 +6,11 @@ import MyToDos from './Pages/MyToDos.js';
 import HelloWorld from './Pages/HelloWorld.js';
 import Picture from './Pages/Picture.js';
 
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 import SideBar from './Components/SideBar.js';
 import { Grid } from '@mui/material';
 
 
 const initialGlobalState = {
-  count: 0,
   todoTasks: [],
 };
 
@@ -63,16 +61,13 @@ class Global extends React.Component {
 const useGlobalState = () => React.useContext(GlobalState);
 
 export default function App() {
-  return (
+  return ( 
     <Global Root={() => <Router>
-
       <Grid container>
         <Grid item xs={4} style={{ flex: '0 0 auto' }}>
           <SideBar />
         </Grid>
-        
         <Grid item xs={6} style={{ flex: '1 1 auto' }}>
-
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/mytodos" element={<MyToDos />} />
